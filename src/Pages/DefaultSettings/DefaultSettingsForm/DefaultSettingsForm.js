@@ -105,7 +105,7 @@ const DefaultSettingsForm = () => {
     console.log("selectedDateObj :::", selectedDateObj);
 
     // Compare the dates only, ignoring time
-    if (selectedDateObj < currentDate) {
+    if (selectedDateObj <= currentDate) {
       return "Expiry date must be in the future.";
     }
     return "";
