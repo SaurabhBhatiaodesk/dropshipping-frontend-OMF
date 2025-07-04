@@ -36,11 +36,31 @@ const CsvFile = () => {
     return `${year}-${month}-${day}`;
   };
 
+  // // Function to validate the expiry date
+  // const validateExpiryDate = (selectedDate) => {
+  //   const currentDate = new Date();
+  //   const selectedDateObj = new Date(selectedDate);
+  //   if (selectedDateObj <= currentDate) {
+  //     return "Expiry date must be in the future.";
+  //   }
+  //   return "";
+  // };
+
+
   // Function to validate the expiry date
   const validateExpiryDate = (selectedDate) => {
     const currentDate = new Date();
     const selectedDateObj = new Date(selectedDate);
-    if (selectedDateObj <= currentDate) {
+
+    // Set both dates to midnight to ignore time differences
+    currentDate.setHours(0, 0, 0, 0);
+    selectedDateObj.setHours(0, 0, 0, 0);
+
+    console.log("currentDate :::", currentDate);
+    console.log("selectedDateObj :::", selectedDateObj);
+
+    // Compare the dates only, ignoring time
+    if (selectedDateObj < currentDate) {
       return "Expiry date must be in the future.";
     }
     return "";
@@ -467,6 +487,8 @@ const CsvFile = () => {
   const handleSave = (e) => {
     e.preventDefault();
     const calendarError = validateExpiryDate(form.expiryDate);
+    console.log("calendarError :::", calendarError);
+
     let isValid = true;
 
     // if (form.bufferQuantity === "no") {
@@ -494,7 +516,7 @@ const CsvFile = () => {
       setFormError((prevState) => ({
         ...prevState,
         // expiryDate: form.expiryDate,
-        expiryDate: "Expiry date must be future date",
+        expiryDate: "Expiry date must be future date.",
       }));
       isValid = false;
     }
@@ -644,7 +666,7 @@ const CsvFile = () => {
                   accept=".csv"
                   onChange={handleCsvInputChanges}
                   style={{ display: "none" }}
-                  // value={fileVal}
+                // value={fileVal}
                 />
                 {/* <button onClick={handleUploadCsvBtn} type="button">
                 Upload csv

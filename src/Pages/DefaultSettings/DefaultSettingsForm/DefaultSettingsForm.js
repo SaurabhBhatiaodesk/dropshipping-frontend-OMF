@@ -82,11 +82,30 @@ const DefaultSettingsForm = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Function to validate the expiry date
+  // // Function to validate the expiry date
+  // const validateExpiryDate = (selectedDate) => {
+  //   const currentDate = new Date();
+  //   const selectedDateObj = new Date(selectedDate);
+  //   if (selectedDateObj <= currentDate) {
+  //     return "Expiry date must be in the future.";
+  //   }
+  //   return "";
+  // };
+
+    // Function to validate the expiry date
   const validateExpiryDate = (selectedDate) => {
     const currentDate = new Date();
     const selectedDateObj = new Date(selectedDate);
-    if (selectedDateObj <= currentDate) {
+
+    // Set both dates to midnight to ignore time differences
+    currentDate.setHours(0, 0, 0, 0);
+    selectedDateObj.setHours(0, 0, 0, 0);
+
+    console.log("currentDate :::", currentDate);
+    console.log("selectedDateObj :::", selectedDateObj);
+
+    // Compare the dates only, ignoring time
+    if (selectedDateObj < currentDate) {
       return "Expiry date must be in the future.";
     }
     return "";
